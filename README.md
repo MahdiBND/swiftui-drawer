@@ -46,8 +46,6 @@ ZStack {
 
 ## Examples
 
-<img src=https://raw.githubusercontent.com/maustinstar/swiftui-drawer/master/Docs/Media/white-drawer.gif width=200 align="right" />
-
 A multi-height drawer with haptic impact.
 
 ```swift
