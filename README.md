@@ -15,14 +15,14 @@ A SwiftUI bottom-up controller, like in the Maps app. Drag to expand or minimize
 
 ### For Xcode Projects
 
-File > Swift Packages > Add Package Dependency: https://github.com/maustinstar/swiftui-drawer
+File > Swift Packages > Add Package Dependency: https://github.com/MahdiBND/swiftui-drawer
 
 ### For Swift Packages
 
 Add a dependency in your your `Package.swift`
 
 ```swift
-.package(url: "https://github.com/maustinstar/swiftui-drawer.git", from: "0.1.0"),
+.package(url: "https://github.com/MahdiBND/swiftui-drawer.git", from: "0.1.0"),
 ```
 
 ## Basic Usage
@@ -51,24 +51,28 @@ ZStack {
 A multi-height drawer with haptic impact.
 
 ```swift
-Drawer {
-    ZStack {
-        
-        RoundedRectangle(cornerRadius: 12)
-            .foregroundColor(.white)
-            .shadow(radius: 100)
-        
-        VStack(alignment: .center) {
-            Spacer().frame(height: 4.0)
-            RoundedRectangle(cornerRadius: 3.0)
-                .foregroundColor(.gray)
-                .frame(width: 30.0, height: 6.0)
-            Spacer()
-        }
-    }
-}.edgesIgnoringSafeArea(.vertical)
-.rest(at: .constant([100, 340, UIScreen.main.bounds.height - 40]))
-.impact(.light)
+struct ContentView: View {
+	@State var point = SnapPoint.bottom
+	
+	var body: some View {
+		Drawer {
+			ZStack(alignment: .top) {
+				switch point {
+					case .bottom: Color.blue.edgesIgnoringSafeArea(.all).animation(.spring())
+					case .middle: Color.green.edgesIgnoringSafeArea(.all)
+					default: Color.pink.edgesIgnoringSafeArea(.all)
+				}
+				
+				Text("\(point.value)")
+					.padding()
+			}
+		}
+		.snap(at: [.bottom, .middle, .top])
+		.onSnap { point in self.point = point }
+		.impact(.light)
+		.edgesIgnoringSafeArea(.vertical)
+	}
+}
 ```
 **See more [Examples](https://github.com/maustinstar/swiftui-drawer/blob/master/Docs/Examples.md)**
 
